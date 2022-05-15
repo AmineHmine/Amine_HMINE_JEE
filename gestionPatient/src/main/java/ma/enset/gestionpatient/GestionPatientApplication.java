@@ -16,13 +16,13 @@ public class GestionPatientApplication {
         SpringApplication.run(GestionPatientApplication.class, args);
     }
 
-    @Bean
+    //@Bean
     CommandLineRunner cmd(PatientRepository patRepo){
         return args -> {
-            patRepo.save(new Patient(null,"amine",new Date(),true,20));
-            patRepo.save(new Patient(null,"nadia",new Date(),false,50));
-            patRepo.save(new Patient(null,"amal",new Date(),false,30));
-            patRepo.save(new Patient(null,"fati",new Date(),true,40));
+            patRepo.save(new Patient(null,"amine",new Date(),true,120));
+            patRepo.save(new Patient(null,"nadia",new Date(),false,150));
+            patRepo.save(new Patient(null,"amal",new Date(),false,630));
+            patRepo.save(new Patient(null,"fati",new Date(),true,440));
         };
     }
 }

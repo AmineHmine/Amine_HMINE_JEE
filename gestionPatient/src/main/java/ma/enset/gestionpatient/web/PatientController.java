@@ -7,10 +7,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -21,7 +24,7 @@ public class PatientController {
     @GetMapping("/index")
     public String patient(Model model,
                           @RequestParam(name = "page",defaultValue = "0") int page,
-                          @RequestParam(name = "size",defaultValue = "10") int size,
+                          @RequestParam(name = "size",defaultValue = "6") int size,
                           @RequestParam(name = "keyword",defaultValue = "") String keyword
 
     ){
@@ -35,7 +38,10 @@ public class PatientController {
     }
 
     @GetMapping(path="/delete")
-    public String delete(Long id,int page,String keyword){
+    public String delete(Long id,
+                         @RequestParam(defaultValue = "0") int page,
+                         @RequestParam(defaultValue = "") String keyword
+    ){
         patRepo.deleteById(id);
         return "redirect:/index?page="+page+"&keyword="+keyword;
     }
@@ -51,5 +57,33 @@ public class PatientController {
         return patRepo.findAll();
     }
 
+    @GetMapping(path="/formPatient")
+    public String formPatient(Model model){
+        model.addAttribute("patient",new Patient());
+        return "formPatient";
+    }
+
+    @PostMapping(path="/save")
+    public String save(Model model,@Valid Patient patient,
+                       BindingResult bindingResult,
+                       @RequestParam(defaultValue = "0") int page,
+                       @RequestParam(defaultValue = "") String keyword
+                       ){
+        if (bindingResult.hasErrors()){
+            return "formPatient";
+        }
+        patRepo.save(patient);
+        return "redirect:/index?page="+page+"&keyword="+keyword;
+    }
+
+    @GetMapping(path="/edit")
+    public String edit(Model model,Long id,int page,String keyword){
+        Patient p = patRepo.findById(id).orElse(null);
+        if(p==null)throw new RuntimeException("not exist patient");
+        model.addAttribute("patEdit",p);
+        model.addAttribute("page",page);
+        model.addAttribute("key",keyword);
+        return "editPatient";
+    }
 
 }

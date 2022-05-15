@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1">
+
+<head>
+    <meta charset="UTF-8" >
+    <title>Form Patients</title>
+</head>
+<body class="bg-slate-200">
+<div layout:fragment="body" class="flex wrap justify-center mt-10">
+    <div class="relative overflow-x-auto rounded-lg bg-white w-1/2 p-8">
+        <h4 class="w-full text-4xl font-medium leading-snug">Example contact form</h4>
+        <form method="post" th:action="@{save(page=${page},keyword=${key})}" class="relative w-full mt-6 space-y-8">
+            <div class="relative">
+                <label class="absolute px-2 ml-2 -mt-3 font-medium text-gray-600 bg-white">id : </label>
+                <label class="absolute px-2 ml-2 -mt-3 font-medium text-gray-600 bg-white" th:text="${patEdit.getId()}"></label>
+                <input th:value="${patEdit.getId()}" name="id" type="hidden" class="block w-full px-4 py-4 mt-2 text-base placeholder-gray-400 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-black">
+                <span class="text-red-600" th:errors="${patEdit.id}"></span>
+            </div>
+            <div class="relative">
+                <label class="absolute px-2 ml-2 -mt-3 font-medium text-gray-600 bg-white">Nom</label>
+                <input th:value="${patEdit.getNom()}" name="nom" type="text" class="block w-full px-4 py-4 mt-2 text-base placeholder-gray-400 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-black">
+                <span class="text-red-600" th:errors="${patEdit.nom}"></span>
+            </div>
+            <div class="relative">
+                <label class="absolute px-2 ml-2 -mt-3 font-medium text-gray-600 bg-white">Date de naissance</label>
+                <input th:value="${patEdit.getDate()}" name="date" type="date" class="block w-full px-4 py-4 mt-2 text-base placeholder-gray-400 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-black">
+            </div>
+            <div class="relative">
+                <label class="absolute px-2 ml-2 -mt-3 font-medium text-gray-600 bg-white">Score</label>
+                <input th:value="${patEdit.getScore()}" name="score" type="number" class="block w-full px-4 py-4 mt-2 text-base placeholder-gray-400 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-black">
+                <span class="text-red-600" th:errors="${patEdit.score}"></span>
+            </div>
+            <div class="relative">
+                <label class="absolute -mt-3 font-medium text-gray-600 bg-white">Malade</label>
+                <input th:checked="${patEdit.isMalade()}" name="malade" type="checkbox" class="block w-full px-4 py-4 mt-2 text-base placeholder-gray-400 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-black">
+            </div>
+            <div class="relative">
+                <button class="inline-block w-full px-5 py-4 text-xl font-medium text-center text-white transition duration-200 bg-blue-600 rounded-lg hover:bg-blue-500 ease">save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>
