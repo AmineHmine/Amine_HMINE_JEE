@@ -10,11 +10,12 @@
 <body class="bg-slate-200">
 <div layout:fragment="body" class="flex wrap justify-center mt-10">
     <div class="relative overflow-x-auto rounded-lg bg-white w-1/2 p-8">
-        <h4 class="w-full text-4xl font-medium leading-snug">Example contact form</h4>
+        <h4 class="w-full text-4xl font-medium leading-snug">edit patient form</h4>
         <form method="post" th:action="@{save(page=${page},keyword=${key})}" class="relative w-full mt-6 space-y-8">
+            <span class=" px-2 ml-2 -mt-3 font-medium text-gray-600 bg-white">id : </span>
+            <span class=" px-2 ml-2 -mt-3 font-medium text-gray-600 bg-white" th:text="${patEdit.getId()}"></span>
             <div class="relative">
-                <label class="absolute px-2 ml-2 -mt-3 font-medium text-gray-600 bg-white">id : </label>
-                <label class="absolute px-2 ml-2 -mt-3 font-medium text-gray-600 bg-white" th:text="${patEdit.getId()}"></label>
+
                 <input th:value="${patEdit.getId()}" name="id" type="hidden" class="block w-full px-4 py-4 mt-2 text-base placeholder-gray-400 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-black">
                 <span class="text-red-600" th:errors="${patEdit.id}"></span>
             </div>
