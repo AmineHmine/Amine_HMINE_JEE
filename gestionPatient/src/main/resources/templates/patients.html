@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+
       layout:decorate="template1">
 
 <head>
@@ -39,10 +41,10 @@
                 <th scope="col" class="px-6 py-3">
                     score
                 </th>
-                <th class="px-6 py-3">
+                <th sec:authorize="hasRole('ADMIN')" class="px-6 py-3">
                     <span class="text-right">edit</span>
                 </th>
-                <th class="px-6 py-3">
+                <th sec:authorize="hasRole('ADMIN')" class="px-6 py-3">
                     <span class="text-right">delete</span>
                 </th>
             </tr>
@@ -59,11 +61,11 @@
                 </td>
                 <td th:text="${p.getScore()}" class="px-6 py-4">
                 </td>
-                <td class="px-6 py-4 text-left">
-                    <a th:href="@{edit(id=${p.getId()},page=${currentPage},keyword=${currentKey})}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">edit</a>
+                <td sec:authorize="hasRole('ADMIN')" class="px-6 py-4 text-left">
+                    <a th:href="@{/admin/edit(id=${p.getId()},page=${currentPage},keyword=${currentKey})}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">edit</a>
                 </td>
-                <td class="px-6 py-4 text-left">
-                    <a onclick="return confirm('are you sure')" th:href="@{delete(id=${p.getId()},page=${currentPage},keyword=${currentKey})}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">delete</a>
+                <td sec:authorize="hasRole('ADMIN')" class="px-6 py-4 text-left">
+                    <a onclick="return confirm('are you sure')" th:href="@{/admin/delete(id=${p.getId()},page=${currentPage},keyword=${currentKey})}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">delete</a>
                 </td>
             </tr>
             </tbody>

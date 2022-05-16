@@ -21,7 +21,7 @@ import java.util.List;
 public class PatientController {
     private PatientRepository patRepo;
 
-    @GetMapping("/index")
+    @GetMapping("/user/index")
     public String patient(Model model,
                           @RequestParam(name = "page",defaultValue = "0") int page,
                           @RequestParam(name = "size",defaultValue = "6") int size,
@@ -37,33 +37,33 @@ public class PatientController {
         return "patients";
     }
 
-    @GetMapping(path="/delete")
+    @GetMapping(path="/admin/delete")
     public String delete(Long id,
                          @RequestParam(defaultValue = "0") int page,
                          @RequestParam(defaultValue = "") String keyword
     ){
         patRepo.deleteById(id);
-        return "redirect:/index?page="+page+"&keyword="+keyword;
+        return "redirect:/user/index?page="+page+"&keyword="+keyword;
     }
 
     @GetMapping(path="/")
     public String home(){
-        return "redirect:/index";
+        return "home";
     }
 
-    @GetMapping(path="/patients")
+    @GetMapping(path="/user/patients")
     @ResponseBody
     public List<Patient> listPatients(){
         return patRepo.findAll();
     }
 
-    @GetMapping(path="/formPatient")
+    @GetMapping(path="/admin/formPatient")
     public String formPatient(Model model){
         model.addAttribute("patient",new Patient());
         return "formPatient";
     }
 
-    @PostMapping(path="/save")
+    @PostMapping(path="/admin/save")
     public String save(Model model,@Valid Patient patient,
                        BindingResult bindingResult,
                        @RequestParam(defaultValue = "0") int page,
@@ -73,10 +73,10 @@ public class PatientController {
             return "formPatient";
         }
         patRepo.save(patient);
-        return "redirect:/index?page="+page+"&keyword="+keyword;
+        return "redirect:/user/index?page="+page+"&keyword="+keyword;
     }
 
-    @GetMapping(path="/edit")
+    @GetMapping(path="/admin/edit")
     public String edit(Model model,Long id,int page,String keyword){
         Patient p = patRepo.findById(id).orElse(null);
         if(p==null)throw new RuntimeException("not exist patient");
