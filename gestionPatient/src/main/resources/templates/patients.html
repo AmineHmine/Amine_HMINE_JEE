@@ -41,10 +41,10 @@
                 <th scope="col" class="px-6 py-3">
                     score
                 </th>
-                <th sec:authorize="hasRole('ADMIN')" class="px-6 py-3">
+                <th sec:authorize="hasAuthority('ADMIN')" class="px-6 py-3">
                     <span class="text-right">edit</span>
                 </th>
-                <th sec:authorize="hasRole('ADMIN')" class="px-6 py-3">
+                <th sec:authorize="hasAuthority('ADMIN')" class="px-6 py-3">
                     <span class="text-right">delete</span>
                 </th>
             </tr>
@@ -61,10 +61,10 @@
                 </td>
                 <td th:text="${p.getScore()}" class="px-6 py-4">
                 </td>
-                <td sec:authorize="hasRole('ADMIN')" class="px-6 py-4 text-left">
+                <td sec:authorize="hasAuthority('ADMIN')" class="px-6 py-4 text-left">
                     <a th:href="@{/admin/edit(id=${p.getId()},page=${currentPage},keyword=${currentKey})}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">edit</a>
                 </td>
-                <td sec:authorize="hasRole('ADMIN')" class="px-6 py-4 text-left">
+                <td sec:authorize="hasAuthority('ADMIN')" class="px-6 py-4 text-left">
                     <a onclick="return confirm('are you sure')" th:href="@{/admin/delete(id=${p.getId()},page=${currentPage},keyword=${currentKey})}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">delete</a>
                 </td>
             </tr>
