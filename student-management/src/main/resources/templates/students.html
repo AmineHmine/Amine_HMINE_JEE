@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div layout:fragment="body" class="flex wrap justify-center mt-10">
+    <div class="relative overflow-x-auto rounded-lg bg-white w-3/4 p-8">
+        <h1 class="text-4xl font-bold text-center">LISTE DES ETUDIANTS</h1>
+        <form method="get" th:action="@{index}" class="p-10">
+            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
+            <div class="relative">
+                <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <input th:value="${currentKey}" name="keyword" type="search" id="default-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Patient" >
+                <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+            </div>
+        </form>
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs uppercase bg-gray-700 text-gray-200">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    ID
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Nom
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    PRENOM
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    EMAIL
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    DATE NAISS
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    SEXE
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    REGLE
+                </th>
+                <th class="px-6 py-3">
+                    <span class="text-right">edit</span>
+                </th>
+                <th class="px-6 py-3">
+                    <span class="text-right">delete</span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr  th:each="std:${studentsList}"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td th:text="${std.id}" class="px-6 py-4"></td>
+                <td th:text="${std.nom}" class="px-6 py-4"></td>
+                <td th:text="${std.prenom}" class="px-6 py-4"></td>
+                <td th:text="${std.email}" class="px-6 py-4"></td>
+                <td th:text="${std.dateNaiss}" class="px-6 py-4"></td>
+                <td th:text="${std.getGenre()}" class="px-6 py-4"></td>
+                <td th:text="${std.regle}" class="px-6 py-4"></td>
+                <td class="px-6 py-4 text-left">
+                    <a th:href="@{edit(id=${std.id},page=${currentPage},keyword=${currentKey})}" class="font-medium text-teal-600 dark:text-blue-500 hover:underline">edit</a>
+                </td>
+                <td class="px-6 py-4 text-left">
+                    <a onclick="return confirm('are you sure you want to delete this student ?')" th:href="@{delete(id=${std.id},page=${currentPage},keyword=${currentKey})}" class="text-red-600  font-medium  dark:text-blue-500 hover:underline">delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <nav class="py-4 justify-self-center">
+            <ul class="  inline-flex items-center -space-x-px">
+                <li th:each="page,status:${nbPages}" >
+                    <a th:class="${status.index==currentPage?'mx-2 py-2 px-3 leading-tight  hover:bg-blue-300 text-white bg-blue-400':'mx-2 text-gray-500 bg-white border border-gray-300 py-2 px-3 leading-tight  hover:bg-gray-100 hover:text-gray-700'}"
+                       th:text="${status.index}"
+                       th:href="@{index(page=${status.index},keyword=${currentKey})}"
+                    >
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+</div>
+</body>
+</html>
