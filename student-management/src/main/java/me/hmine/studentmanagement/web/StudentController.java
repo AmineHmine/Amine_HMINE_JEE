@@ -19,7 +19,7 @@ import java.util.List;
 public class StudentController {
     private StudentRepository studentRepo;
 
-    @GetMapping("/index")
+    @GetMapping("/user/index")
     public String student(Model model,
                           @RequestParam(name = "page",defaultValue = "0") int page,
                           @RequestParam(name = "size",defaultValue = "7") int size,
@@ -35,7 +35,7 @@ public class StudentController {
         return "students";
     }
 
-    @GetMapping(path="/delete")
+    @GetMapping(path="/admin/delete")
     public String delete(Long id,
                          @RequestParam(defaultValue = "0") int page,
                          @RequestParam(defaultValue = "") String keyword
@@ -46,22 +46,22 @@ public class StudentController {
 
     @GetMapping(path="/")
     public String home(){
-        return "redirect:/index";
+        return "home";
     }
 
-    @GetMapping(path="/students")
+    @GetMapping(path="/user/students")
     @ResponseBody
     public List<Student> listPatients(){
         return studentRepo.findAll();
     }
 
-    @GetMapping(path="/addStudent")
+    @GetMapping(path="/admin/addStudent")
     public String addStudent(Model model){
         model.addAttribute("student",new Student());
         return "addStudentForm";
     }
 
-    @PostMapping(path="/save")
+    @PostMapping(path="/admin/save")
     public String save(Model model,@Valid Student patient,
                        BindingResult bindingResult,
                        @RequestParam(defaultValue = "0") int page,
@@ -74,7 +74,7 @@ public class StudentController {
         return "redirect:/index?page="+page+"&keyword="+keyword;
     }
 
-    @GetMapping(path="/edit")
+    @GetMapping(path="/admin/edit")
     public String edit(Model model,Long id,int page,String keyword){
         Student std = studentRepo.findById(id).orElse(null);
         if(std==null)throw new RuntimeException("not exist student");
