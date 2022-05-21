@@ -1,14 +1,12 @@
 package com.example.digitalbankingbackend;
 
-import com.example.digitalbankingbackend.entities.AccountOperation;
-import com.example.digitalbankingbackend.entities.CurrentAccount;
-import com.example.digitalbankingbackend.entities.Customer;
-import com.example.digitalbankingbackend.entities.SavingAccount;
+import com.example.digitalbankingbackend.entities.*;
 import com.example.digitalbankingbackend.enums.AccountStatus;
 import com.example.digitalbankingbackend.enums.OpType;
 import com.example.digitalbankingbackend.repositories.AccOperationRepository;
 import com.example.digitalbankingbackend.repositories.BankAccRepository;
 import com.example.digitalbankingbackend.repositories.CustomerRepository;
+import com.example.digitalbankingbackend.services.BankService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,7 +23,7 @@ public class DigitalBankingBackendApplication {
         SpringApplication.run(DigitalBankingBackendApplication.class, args);
     }
 
-    @Bean
+    //@Bean
     public CommandLineRunner start(CustomerRepository customerRepo, BankAccRepository bankRepo, AccOperationRepository accOpRepo){
         return args -> {
             Stream.of("Hamza","Amine","Soufiane").forEach(name->{
@@ -68,9 +66,15 @@ public class DigitalBankingBackendApplication {
                     accOpRepo.save(op);
                 }
             });
-
         };
 
 
+    }
+
+    @Bean
+    public CommandLineRunner commandLineRunner(BankService BankServ){
+        return args -> {
+                BankServ.Consulter();
+            };
     }
 }
