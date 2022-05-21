@@ -64,12 +64,18 @@
                 <td th:text="${std.dateNaiss}" class="px-6 py-4"></td>
                 <td th:text="${std.getGenre()}" class="px-6 py-4"></td>
                 <td th:text="${std.regle}" class="px-6 py-4"></td>
+
                 <td class="px-6 py-4 text-left">
-                    <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/edit(id=${std.id},page=${currentPage},keyword=${currentKey})}" class="font-medium text-teal-600 dark:text-blue-500 hover:underline">edit</a>
+                    <a sec:authorize="hasAuthority('ADMIN')"
+                       th:href="@{/admin/edit(id=${std.id},page=${currentPage},keyword=${currentKey})}"
+                       class="font-medium text-teal-600 dark:text-blue-500 hover:underline">edit</a>
                 </td>
                 <td class="px-6 py-4 text-left">
-                    <a sec:authorize="hasAuthority('ADMIN')" onclick="return confirm('are you sure you want to delete this student ?')" th:href="@{/admin/delete(id=${std.id},page=${currentPage},keyword=${currentKey})}" class="text-red-600  font-medium  dark:text-blue-500 hover:underline">delete</a>
+                    <a sec:authorize="hasAuthority('ADMIN')" onclick="return confirm('are you sure you want to delete this student ?')"
+                       th:href="@{/admin/delete(id=${std.id},page=${currentPage},keyword=${currentKey})}"
+                       class="text-red-600  font-medium  dark:text-blue-500 hover:underline">delete</a>
                 </td>
+
             </tr>
             </tbody>
         </table>
