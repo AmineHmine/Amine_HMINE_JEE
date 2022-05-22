@@ -1,9 +1,6 @@
 package com.example.digitalbankingbackend.services;
 
-import com.example.digitalbankingbackend.DTOs.BankAccountDTO;
-import com.example.digitalbankingbackend.DTOs.CurrentBankAccountDTO;
-import com.example.digitalbankingbackend.DTOs.CustomerDTO;
-import com.example.digitalbankingbackend.DTOs.SavingBankAccountDTO;
+import com.example.digitalbankingbackend.DTOs.*;
 import com.example.digitalbankingbackend.entities.*;
 import com.example.digitalbankingbackend.enums.OpType;
 import com.example.digitalbankingbackend.exceptions.BankAccountNotFoundException;
@@ -15,10 +12,11 @@ import com.example.digitalbankingbackend.repositories.BankAccRepository;
 import com.example.digitalbankingbackend.repositories.CustomerRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -183,6 +181,26 @@ public class BankAccountServiceImpl implements BankAccountService {
     public void deleteCustomer(Long custId) {
         customerRepo.deleteById(custId);
     }
+    @Override
+    public List<AccountOperationDTO> accountHistory(String accountId){
+        List<AccountOperation>  ops= accOpRepo.findByBankAccountId(accountId);
+        List<AccountOperationDTO> opsDTO = ops.stream().map(op -> mapper.fromAccountOperation(op)).collect(Collectors.toList());
+        return opsDTO;
+    }
 
+    @Override
+    public AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException {
+        BankAccount bankAccount = bankAccRepo.findById(accountId).orElseThrow(() ->new BankAccountNotFoundException("bank account not found"));
+        Page<AccountOperation> ops= accOpRepo.findByBankAccountId(accountId, PageRequest.of(page,size));
+        AccountHistoryDTO opsDTO=new AccountHistoryDTO();
+        List<AccountOperationDTO> opsDTOs = ops.getContent().stream().map(op->mapper.fromAccountOperation(op)).collect(Collectors.toList());
+        opsDTO.setAccountOperationDTOS(opsDTOs);
+        opsDTO.setAccoundId(bankAccount.getId());
+        opsDTO.setBalence(bankAccount.getBalence());
+        opsDTO.setPageSize(size);
+        opsDTO.setCurrentPage(page);
+        opsDTO.setTotalPage(ops.getTotalPages());
+        return opsDTO;
+    }
 
 }

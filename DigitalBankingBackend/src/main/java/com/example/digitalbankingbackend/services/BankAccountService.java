@@ -1,9 +1,6 @@
 package com.example.digitalbankingbackend.services;
 
-import com.example.digitalbankingbackend.DTOs.BankAccountDTO;
-import com.example.digitalbankingbackend.DTOs.CurrentBankAccountDTO;
-import com.example.digitalbankingbackend.DTOs.CustomerDTO;
-import com.example.digitalbankingbackend.DTOs.SavingBankAccountDTO;
+import com.example.digitalbankingbackend.DTOs.*;
 import com.example.digitalbankingbackend.entities.*;
 import com.example.digitalbankingbackend.exceptions.BankAccountNotFoundException;
 import com.example.digitalbankingbackend.exceptions.CustomerNotFoundException;
@@ -25,4 +22,6 @@ public interface BankAccountService {
     CustomerDTO getCustomer(Long custId) throws CustomerNotFoundException;
     CustomerDTO updateCustomer(CustomerDTO customerDTO);
     void deleteCustomer(Long custId);
+    List<AccountOperationDTO> accountHistory(String accountId);
+    AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException;
 }

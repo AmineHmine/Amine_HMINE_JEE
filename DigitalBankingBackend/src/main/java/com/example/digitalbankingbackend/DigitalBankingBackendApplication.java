@@ -41,38 +41,44 @@ public class DigitalBankingBackendApplication {
                     cust.setEmail(name+"@gmail.com");
                     bankServ.saveCustomer(cust);
                 });
+
+
                 bankServ.listCustomers().forEach(cust->{
                     try {
                         bankServ.saveCurrentBankAccount(Math.random()*90000, cust.getId(),Math.random()*900);
                         bankServ.saveSavingAccount(Math.random()*120000, cust.getId(),5.5);
-                        List<BankAccountDTO> banks = bankServ.bankAccounts();
-                            for (BankAccountDTO bank:banks){
-                                for (int i = 0; i < 2; i++) {
-                                    String id;
-                                    if (bank instanceof CurrentBankAccountDTO){
-                                        id=((CurrentBankAccountDTO) bank).getId();
-                                    }
-                                    else {
-                                        id=((SavingBankAccountDTO) bank).getId();
-                                    }
-                                    System.out.println(cust.getName()+"  ---  "+id);
-                                    bankServ.credit(id,10000+Math.random()*120000,"credit");
-                                }
-                                for (int i = 0; i < 2; i++) {
-                                    String id;
-                                    if (bank instanceof CurrentBankAccountDTO){
-                                        id=((CurrentBankAccountDTO) bank).getId();
-                                    }
-                                    else {
-                                        id=((SavingBankAccountDTO) bank).getId();
-                                    }
-                                    bankServ.debit(id,1000+Math.random()*9000,"debit");
-                                }
-                            }
-                    } catch (CustomerNotFoundException | BankAccountNotFoundException | SoldeInsufisqntException e) {
+
+                    } catch (CustomerNotFoundException e) {
                         e.printStackTrace();
                     }
+
                 });
+
+            List<BankAccountDTO> banks = bankServ.bankAccounts();
+            for (BankAccountDTO bank:banks){
+                for (int i = 0; i < 2; i++) {
+                    String id;
+                    if (bank instanceof CurrentBankAccountDTO){
+                        id=((CurrentBankAccountDTO) bank).getId();
+                    }
+                    else {
+                        id=((SavingBankAccountDTO) bank).getId();
+                    }
+                    bankServ.credit(id,10000+Math.random()*120000,"credit");
+                }
+                for (int i = 0; i < 2; i++) {
+                    String id;
+                    if (bank instanceof CurrentBankAccountDTO){
+                        id=((CurrentBankAccountDTO) bank).getId();
+                    }
+                    else {
+                        id=((SavingBankAccountDTO) bank).getId();
+                    }
+                    bankServ.debit(id,1000+Math.random()*9000,"debit");
+                }
+            }
+
+
                 bankServ.ops().forEach(accountOperation -> {
                     System.out.println(accountOperation.getType() +"-"+accountOperation.getBankAccount().getId() );
                 });

@@ -1,8 +1,10 @@
 package com.example.digitalbankingbackend.mappers;
 
+import com.example.digitalbankingbackend.DTOs.AccountOperationDTO;
 import com.example.digitalbankingbackend.DTOs.CurrentBankAccountDTO;
 import com.example.digitalbankingbackend.DTOs.CustomerDTO;
 import com.example.digitalbankingbackend.DTOs.SavingBankAccountDTO;
+import com.example.digitalbankingbackend.entities.AccountOperation;
 import com.example.digitalbankingbackend.entities.CurrentAccount;
 import com.example.digitalbankingbackend.entities.Customer;
 import com.example.digitalbankingbackend.entities.SavingAccount;
@@ -29,6 +31,7 @@ public class BankAccMapperImpl {
         CurrentBankAccountDTO currAccDTO = new CurrentBankAccountDTO();
         BeanUtils.copyProperties(currentAccount,currAccDTO);
         currAccDTO.setCustomerDTO(fromCustomer(currentAccount.getCustomer()));
+        currAccDTO.setType(currentAccount.getClass().getSimpleName());
         return currAccDTO;
     }
     public CurrentAccount fromCurrentAccountDTO( CurrentBankAccountDTO currentBankAccountDTO){
@@ -42,6 +45,7 @@ public class BankAccMapperImpl {
         SavingBankAccountDTO saveAccDTO = new SavingBankAccountDTO();
         BeanUtils.copyProperties(savingAccount,saveAccDTO);
         saveAccDTO.setCustomerDTO(fromCustomer(savingAccount.getCustomer()));
+        saveAccDTO.setType(savingAccount.getClass().getSimpleName());
         return saveAccDTO;
     }
 
@@ -53,6 +57,16 @@ public class BankAccMapperImpl {
     }
 
 
+    public AccountOperationDTO fromAccountOperation(AccountOperation accOP){
+        AccountOperationDTO accOpDTO= new AccountOperationDTO();
+        BeanUtils.copyProperties(accOP,accOpDTO);
+        return  accOpDTO;
+    }
 
+    public AccountOperation fromAccountOperationDTO(AccountOperationDTO accOpDTO){
+        AccountOperation accOP = new AccountOperation();
+        BeanUtils.copyProperties(accOpDTO,accOP);
+        return  accOP;
+    }
 
 }
