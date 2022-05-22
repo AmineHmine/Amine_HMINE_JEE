@@ -21,4 +21,5 @@ public class AccountOperation {
     private OpType type;
     @ManyToOne
     private BankAccount bankAccount;
+    private String description;
 }
