@@ -137,7 +137,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         BankAccount srcBank = bankAccRepo.findById(srcId).orElseThrow(()-> new BankAccountNotFoundException("bank account not found"));
         BankAccount destBank = bankAccRepo.findById(destId).orElseThrow(()-> new BankAccountNotFoundException("bank account not found"));
         debit(srcId,amount,"Transfer To "+destBank.getCustomer().getName());
-        credit(srcId,amount,"Transfer From "+srcBank.getCustomer().getName());
+        credit(destId,amount,"Transfer From "+srcBank.getCustomer().getName());
     }
 
     @Override
