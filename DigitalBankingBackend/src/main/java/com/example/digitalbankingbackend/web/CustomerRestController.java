@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @AllArgsConstructor
 @Slf4j
@@ -20,6 +21,14 @@ public class CustomerRestController {
     public List<CustomerDTO> customers(){
         return bankAccServ.listCustomers();
     }
+
+    @GetMapping("/customers/search")
+    public List<CustomerDTO> searchCustomers(
+            @RequestParam(name = "keyword" , defaultValue = "") String keyword
+    ){
+        return bankAccServ.searchCustomers("%"+keyword+"%");
+    }
+
     @GetMapping("/customers/{id}")
     public CustomerDTO getCustomer(@PathVariable(name = "id") Long custId) throws CustomerNotFoundException {
         return bankAccServ.getCustomer(custId);
@@ -37,7 +46,7 @@ public class CustomerRestController {
     }
 
     @DeleteMapping("/customers/{id}")
-    public void updateCustomer(@PathVariable Long id){
+    public void deleteCustomer(@PathVariable Long id){
         bankAccServ.deleteCustomer(id);
     }
 

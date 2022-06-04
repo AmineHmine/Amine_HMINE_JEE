@@ -35,7 +35,7 @@ public class DigitalBankingBackendApplication {
     @Bean
     public CommandLineRunner commandLineRunner(BankAccountService bankServ){
         return args -> {
-                Stream.of("Amine","Amal","Nadia","Ziad").forEach(name->{
+                Stream.of("Amine","Amal","Nadia","Ziad","riad","achraf","simo").forEach(name->{
                     CustomerDTO cust = new CustomerDTO();
                     cust.setName(name);
                     cust.setEmail(name+"@gmail.com");
@@ -56,7 +56,7 @@ public class DigitalBankingBackendApplication {
 
             List<BankAccountDTO> banks = bankServ.bankAccounts();
             for (BankAccountDTO bank:banks){
-                for (int i = 0; i < 2; i++) {
+                for (int i = 0; i < 10; i++) {
                     String id;
                     if (bank instanceof CurrentBankAccountDTO){
                         id=((CurrentBankAccountDTO) bank).getId();
@@ -66,7 +66,7 @@ public class DigitalBankingBackendApplication {
                     }
                     bankServ.credit(id,10000+Math.random()*120000,"credit");
                 }
-                for (int i = 0; i < 2; i++) {
+                for (int i = 0; i < 10; i++) {
                     String id;
                     if (bank instanceof CurrentBankAccountDTO){
                         id=((CurrentBankAccountDTO) bank).getId();

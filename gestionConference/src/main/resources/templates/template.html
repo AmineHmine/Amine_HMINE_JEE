@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>conferences</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div class="flex wrap justify-center mt-10">
+    <div class="relative overflow-x-auto rounded-lg bg-white w-3/4 p-8">
+        <h1 class="text-4xl font-bold text-center">LISTE DES Conference</h1>
+        <form method="get" th:action="@{/conferences}" class="p-10">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs uppercase bg-gray-700 text-gray-200">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    ID
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Confereence
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Date
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Date debut
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    date fin
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    description
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
